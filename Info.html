@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeharHabib.com - Payment Gateway and Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .payment-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            margin: 30px auto;
+            text-align: center;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .payment-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            width: 280px;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .btn-social {
+            background-color: #2c3e50;
+            color: white;
+            margin: 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        .payment-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .payment-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .share-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+        
+        /* Popup styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .popup-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+        }
+        
+        .popup-content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .popup-content p {
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .checkbox-container input {
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-card {
+                width: 100%;
+            }
+            
+            .popup-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Popup that appears first -->
+    <div class="popup-overlay" id="followPopup">
+        <div class="popup-content">
+            <h2>Please Follow All Our Accounts</h2>
+            <p>To access the website, please follow all our social media accounts:</p>
+            
+            <div class="social-links">
+                <a href="https://www.tiktok.com/@habibsaleem786?_t=ZS-8y9iEhRpu3s&_r=1" target="_blank" class="btn btn-social">TikTok</a>
+                <a href="https://www.instagram.com/habibsaleem007?igsh=bWY3cmszeXN0ZXF3&utm_source=qr" target="_blank" class="btn btn-social">Instagram</a>
+                <a href="https://www.facebook.com/share/1AsKcfXKbr/?mibextid=wwXIfr" target="_blank" class="btn btn-social">Facebook</a>
+                <a href="https://youtube.com/@habibsaleem007?si=BcUDlb7hvBjDjLV4" target="_blank" class="btn btn-social">YouTube</a>
+            </div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="followedAll">
+                <label for="followedAll">I have followed all accounts</label>
+            </div>
+            
+            <button class="btn btn-primary" onclick="checkFollowStatus()">Continue to Website</button>
+        </div>
+    </div>
+    
+    <!-- Main website content (hidden by default) -->
+    <div id="mainContent" style="display: none;">
+        <header>
+            <div class="container">
+                <h1>MeharHabib.com</h1>
+                <p>Secure Payments and Entertainment Games</p>
+            </div>
+        </header>
+        
+        <div class="container">
+            <div class="payment-section">
+                <h2>Payment System</h2>
+                <p>Deposit or withdraw money from your account</p>
+                
+                <div class="payment-info">
+                    <h3>My Payment Numbers</h3>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 20px 0;">
+                        <div>
+                            <h4>EasyPaisa</h4>
+                            <p class="payment-number">03706864738</p>
+                        </div>
+                        <div>
+                            <h4>JazzCash</h4>
+                            <p class="payment-number">03706964738</p>
+                        </div>
+                        <div>
+                            <h4>SadaPay</h4>
+                            <p class="payment-number">03706864738</p>
+                        </div>
+                    </div>
+                    
+                    <p>After sending money, please send the receipt on WhatsApp</p>
+                    <a href="https://wa.me/923706864738" class="btn btn-whatsapp">Contact on WhatsApp</a>
+                </div>
+                
+                <div class="payment-methods">
+                    <div class="payment-card">
+                        <h3>Deposit Money</h3>
+                        <p>Add money to your account</p>
+                        <button class="btn btn-primary" onclick="showDepositForm()">Deposit</button>
+                    </div>
+                    
+                    <div class="payment-card">
+                        <h3>Withdraw Money</h3>
+                        <p>Get your money back</p>
+                        <button class="btn btn-primary" onclick="showWithdrawForm()">Withdrawal Form</button>
+                    </div>
+                </div>
+                
+                <div id="depositForm" style="display: none; margin-top: 30px;">
+                    <h3>Deposit Money</h3>
+                    <p>Please enter the following information:</p>
+                    <form>
+                        <div style="margin: 15px 0;">
+                            <label for="amount">Amount (in PKR):</label>
+                            <input type="number" id="amount" style="padding: 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ddd;">
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <label for="method">Payment Method:</label>
+                            <select id="method" style="padding: 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ddd;">
+                                <option value="easypaisa">EasyPaisa</option>
+                                <option value="jazzcash">JazzCash</option>
+                                <option value="sadapay">SadaPay</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="submitDeposit()">Deposit</button>
+                    </form>
+                </div>
+                
+                <div id="withdrawForm" style="display: none; margin-top: 30px;">
+                    <h3>Withdraw Money</h3>
+                    <p>Please enter the following information:</p>
+                    <form>
+                        <div style="margin: 15px 0;">
+                            <label for="withdrawAmount">Amount (in PKR):</label>
+                            <input type="number" id="withdrawAmount" style="padding: 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ddd;">
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <label for="accountNumber">EasyPaisa/JazzCash/SadaPay Number:</label>
+                            <input type="text" id="accountNumber" style="padding: 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ddd;">
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <label for="withdrawMethod">Withdrawal Method:</label>
+                            <select id="withdrawMethod" style="padding: 10px; width: 100%; max-width: 300px; border-radius: 5px; border: 1px solid #ddd;">
+                                <option value="easypaisa">EasyPaisa</option>
+                                <option value="jazzcash">JazzCash</option>
+                                <option value="sadapay">SadaPay</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="submitWithdraw()">Request Withdrawal</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="share-section">
+                <h2>Share This Website</h2>
+                <p>Share with your friends and earn bonus points</p>
+                <button class="btn btn-whatsapp" onclick="shareOnWhatsApp()">Share on WhatsApp</button>
+                <p id="shareMessage" style="margin-top: 10px; display: none; color: green;">Website link copied! Share it on WhatsApp</p>
+            </div>
+            
+            <div class="payment-section">
+                <h2>Our Social Media Links</h2>
+                <p>Follow us on all social media platforms</p>
+                
+                <div class="social-links">
+                    <a href="https://www.tiktok.com/@habibsaleem786?_t=ZS-8y9iEhRpu3s&_r=1" target="_blank" class="btn btn-social">TikTok</a>
+                    <a href="https://www.instagram.com/habibsaleem007?igsh=bWY3cmszeXN0ZXF3&utm_source=qr" target="_blank" class="btn btn-social">Instagram</a>
+                    <a href="https://www.facebook.com/share/1AsKcfXKbr/?mibextid=wwXIfr" target="_blank" class="btn btn-social">Facebook</a>
+                    <a href="https://youtube.com/@habibsaleem007?si=BcUDlb7hvBjDjLV4" target="_blank" class="btn btn-social">YouTube</a>
+                </div>
+            </div>
+            
+            <div class="payment-section">
+                <h2>Website Screenshots</h2>
+                <p>View of the website on mobile and desktop</p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                    <img src="https://via.placeholder.com/300x500?text=Mobile+View" alt="Mobile View" class="screenshot">
+                    <img src="https://via.placeholder.com/600x400?text=Desktop+View" alt="Desktop View" class="screenshot">
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <p>&copy; 2023 MeharHabib.com. All Rights Reserved.</p>
+                <p>Contact: <a href="https://wa.me/923706864738" style="color: white;">WhatsApp</a> | <a href="tel:03706864738" style="color: white;">03706864738</a></p>
+                <div class="social-links" style="margin-top: 15px;">
+                    <a href="https://www.tiktok.com/@habibsaleem786?_t=ZS-8y9iEhRpu3s&_r=1" target="_blank" style="color: white; margin: 0 10px;">TikTok</a>
+                    <a href="https://www.instagram.com/habibsaleem007?igsh=bWY3cmszeXN0ZXF3&utm_source=qr" target="_blank" style="color: white; margin: 0 10px;">Instagram</a>
+                    <a href="https://www.facebook.com/share/1AsKcfXKbr/?mibextid=wwXIfr" target="_blank" style="color: white; margin: 0 10px;">Facebook</a>
+                    <a href="https://youtube.com/@habibsaleem007?si=BcUDlb7hvBjDjLV4" target="_blank" style="color: white; margin: 0 10px;">YouTube</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // First show the popup
+        document.getElementById('followPopup').style.display = 'flex';
+        document.getElementById('mainContent').style.display = 'none';
+        
+        function checkFollowStatus() {
+            const checkbox = document.getElementById('followedAll');
+            if (checkbox.checked) {
+                document.getElementById('followPopup').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                // Store in localStorage that user has followed
+                localStorage.setItem('hasFollowed', 'true');
+            } else {
+                alert('Please confirm you have followed all accounts');
+            }
+        }
+        
+        // Check if user has already followed (in case they refresh)
+        if (localStorage.getItem('hasFollowed') === 'true') {
+            document.getElementById('followPopup').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+        
+        function showDepositForm() {
+            document.getElementById('depositForm').style.display = 'block';
+            document.getElementById('withdrawForm').style.display = 'none';
+        }
+        
+        function showWithdrawForm() {
+            document.getElementById('withdrawForm').style.display = 'block';
+            document.getElementById('depositForm').style.display = 'none';
+        }
+        
+        function submitDeposit() {
+            const amount = document.getElementById('amount').value;
+            const method = document.getElementById('method').value;
+            
+            if (!amount || amount < 100) {
+                alert("Minimum amount is 100 PKR");
+                return;
+            }
+            
+            let accountNumber = "";
+            switch(method) {
+                case "easypaisa":
+                    accountNumber = "03706864738";
+                    break;
+                case "jazzcash":
+                    accountNumber = "03706964738";
+                    break;
+                case "sadapay":
+                    accountNumber = "03706864738";
+                    break;
+            }
+            
+            alert(`Please send ${amount} PKR to ${method} number ${accountNumber} and send receipt on WhatsApp.`);
+            window.open(`https://wa.me/923706864738?text=I have sent ${amount} PKR via ${method} to ${accountNumber}`, '_blank');
+        }
+        
+        function submitWithdraw() {
+            const amount = document.getElementById('withdrawAmount').value;
+            const account = document.getElementById('accountNumber').value;
+            const method = document.getElementById('withdrawMethod').value;
+            
+            if (!amount || amount < 100) {
+                alert("Minimum amount is 100 PKR");
+                return;
+            }
+            
+            if (!account || account.length !== 11 || !account.startsWith('03')) {
+                alert("Please enter a valid EasyPaisa/JazzCash/SadaPay number");
+                return;
+            }
+            
+            alert(`Your withdrawal request for ${amount} PKR to be sent to ${account} via ${method} has been submitted. Amount will be transferred within 24 hours.`);
+            window.open(`https://wa.me/923706864738?text=Withdrawal request: ${amount} PKR to ${account} via ${method}`, '_blank');
+        }
+        
+        function shareOnWhatsApp() {
+            const websiteUrl = "https://meharhabib.com";
+            const shareMessage = `Check out MeharHabib.com - Payment Gateway and Games website: ${websiteUrl}`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(websiteUrl).then(() => {
+                document.getElementById('shareMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('shareMessage').style.display = 'none';
+                }, 3000);
+            });
+            
+            // Open WhatsApp with share message
+            window.open(`https://wa.me/?text=${encodeURIComponent(shareMessage)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
